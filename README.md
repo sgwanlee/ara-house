@@ -53,3 +53,10 @@ Rails에서는 css파일은 ```application.css```으로 javascript 파일은 ```
 #### Named routes
 ```get 'help' => 'static_pages#help'```은 ```help_path```와 ```help_url```을 만든다.
 
+#### Integration Test
+`assert_select "a[href=?]", about_path` `?`자리에 `about_path`를 넣는다.
+
+#### Test에서 helper 사용
+```test_helper.rb```의 `class ActiveSupport::TestCase`에 `include ApplicationHelper`추가
+
+
