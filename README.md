@@ -1,3 +1,8 @@
+#####--without production
+`bundle install --without production`
+
+Gemfile에 production group에 정의된 gem들은 설치하지 않음.
+
 #####Test text highlighting
 [gem minitest_reporter](http://chriskottom.com/blog/2014/06/dress-up-your-minitest-output/)
 
