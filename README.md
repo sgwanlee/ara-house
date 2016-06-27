@@ -1,3 +1,6 @@
+####REST
+Rails에서는 REST architecture는 data를 만들수있고(created), 보여지고(shown), 수정되고(updated), 삭제되는(destroyed) `resource`로 나타내는 것 이다. 
+
 #####--without production
 `bundle install --without production`
 
@@ -84,4 +87,29 @@ database의 index는 `책`의 index와 똑같이 동작한다. 모든 page에서
 
 [exercise regex: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i](http://rubular.com/r/tOmhu2Cf3N)
 
+
+### Chapter 7.
+
+Sass의 `mixin`은 css rule을 group화 시켜서 여기저기에 `@include` 시킬 수 있게 해준다.
+
+`byebug`라는 gem 덕분에 code상에 `debug`라고 치기만 하면, server log 창에서 debugging을 할 수 있다.
+
+`bundle exec rake db:migrate:reset`
+
+`form`에서 에러가 발생하면 `Rails`가 자동으로 해당 field를 `field_with_errors` class를 가진 `div`로 감싼다.
+
+Sass의 `@extend`는 기존에 정의된 class의 css 속성을 그대로 가져올 수 있게 한다.
+
+```
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+    color: $state-danger-text;
+  }
+}
+```
+
+`assert_template` integration test에서 layout을 제대로 rendering하는지 확인
+
+`redirect_to @user` == `redirect_to user_url(@user)`
 
