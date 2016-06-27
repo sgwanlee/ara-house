@@ -65,3 +65,19 @@ Rails에서는 css파일은 ```application.css```으로 javascript 파일은 ```
 ```test_helper.rb```의 `class ActiveSupport::TestCase`에 `include ApplicationHelper`추가
 
 
+###Chapter6.
+
+`generate` 명령어는 `column`:`type` 형태로 argument를 받는다.
+
+`active_record`의 uniqueness validation이 `db` level에서의 uniqueness validation을 보장하지는 않는다.
+
+<해결책>
+`email` column에 대해서 index를 만들어서, index가 unique하도록 한다.
+database의 index는 `책`의 index와 똑같이 동작한다. 모든 page에서 특정 단어(ex. banana)를 찾는게 full_table scan이면, index page에서 banana를 찾는게 index scan이다.
+
+`fixture`에는 test database를 위한 sample data가 들어있다.
+
+`model` class 내부에서 값 할당시 등호 오른쪽에서는 `self`를 생략할 수 있다.
+`self.email = email.downcase`
+
+`authenticate()`는 password가 맞으면 `User` object를 반환하는데, `!!authenticate()`으로 쓰면 password가 맞을 때 `true`를 반환한다.
