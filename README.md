@@ -81,3 +81,7 @@ database의 index는 `책`의 index와 똑같이 동작한다. 모든 page에서
 `self.email = email.downcase`
 
 `authenticate()`는 password가 맞으면 `User` object를 반환하는데, `!!authenticate()`으로 쓰면 password가 맞을 때 `true`를 반환한다.
+
+[exercise regex: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i](http://rubular.com/r/tOmhu2Cf3N)
+
+
