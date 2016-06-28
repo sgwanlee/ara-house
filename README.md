@@ -1,6 +1,9 @@
 ####REST
 Rails에서는 REST architecture는 data를 만들수있고(created), 보여지고(shown), 수정되고(updated), 삭제되는(destroyed) `resource`로 나타내는 것 이다. 
 
+####Git
+`git checkout -f` local에서의 변경사항을 모두 버림.
+
 #####--without production
 `bundle install --without production`
 
@@ -113,3 +116,7 @@ Sass의 `@extend`는 기존에 정의된 class의 css 속성을 그대로 가져
 
 `redirect_to @user` == `redirect_to user_url(@user)`
 
+
+
+### Chapter 8.
+Rails는 `cookies`를 이용해서 sessions을 구현한다.
