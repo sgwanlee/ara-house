@@ -4,6 +4,8 @@ Rails에서는 REST architecture는 data를 만들수있고(created), 보여지�
 ####Git
 `git checkout -f` local에서의 변경사항을 모두 버림.
 
+`git checkout --track origin/test-branch` 는 local에 origin/test-branch와 같은 commit을 가진 test-branch라는 branch를 만든다.
+
 #####--without production
 `bundle install --without production`
 
@@ -135,3 +137,8 @@ Rails는 `cookies`를 이용해서 sessions을 구현한다.
 
 `.find`는 찾는 대상이 없으면 exception을 날리고, `.find_by`는 `nil`을 반환한다.
 
+`<%= link_to "Log out", logout_path, method: "delete" %>`
+
+`helper` method는 test에서 사용할 수 없다.
+
+같은 기능의 helper method를 development와 test에서 사용해야 한다면, 이름을 다르게 해서 헷갈리지 않도록 하자.
