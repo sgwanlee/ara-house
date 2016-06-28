@@ -6,6 +6,8 @@ Rails에서는 REST architecture는 data를 만들수있고(created), 보여지�
 
 `git checkout --track origin/test-branch` 는 local에 origin/test-branch와 같은 commit을 가진 test-branch라는 branch를 만든다.
 
+`git branch -dr origin/login-logout` remote branch를 없앨 때는 `-dr` 옵션을 사용하자.
+
 #####--without production
 `bundle install --without production`
 
