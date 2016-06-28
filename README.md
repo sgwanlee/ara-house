@@ -120,3 +120,18 @@ Sass의 `@extend`는 기존에 정의된 class의 css 속성을 그대로 가져
 
 ### Chapter 8.
 Rails는 `cookies`를 이용해서 sessions을 구현한다.
+
+`form_for(@user)` 이건 `/users` URL에 `POST` action이라고 Rails가 이해한다.
+
+`integration test`
+
+1. invalid information --> assert_not
+
+2. valid information --> assert
+
+`ApplicationController`에 `include SessionsHelper`를 넣으면, 모든 view에서 helper module에 정의된 method를 사용할 수 있다.
+
+`redirect_to user`에서 Rails는 자동으로 `user_url(user)`으로 바꿔준다.
+
+`.find`는 찾는 대상이 없으면 exception을 날리고, `.find_by`는 `nil`을 반환한다.
+
