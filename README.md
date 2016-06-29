@@ -1,10 +1,27 @@
 ####REST
 Rails에서는 REST architecture는 data를 만들수있고(created), 보여지고(shown), 수정되고(updated), 삭제되는(destroyed) `resource`로 나타내는 것 이다. 
 
+####Git
+`git checkout -f` local에서의 변경사항을 모두 버림.
+
+`git checkout --track origin/test-branch` 는 local에 origin/test-branch와 같은 commit을 가진 test-branch라는 branch를 만든다.
+
+`git branch -dr origin/login-logout` remote branch를 없앨 때는 `-dr` 옵션을 사용하자.
+
 #####--without production
 `bundle install --without production`
 
 Gemfile에 production group에 정의된 gem들은 설치하지 않음.
+
+#####Rails console
+console에서 route helper 이용하려면
+
+```
+> include Rails.application.routes.url_helpers
+> app.login_path
+
+```
+
 
 #####Test text highlighting
 [gem minitest_reporter](http://chriskottom.com/blog/2014/06/dress-up-your-minitest-output/)
@@ -112,4 +129,43 @@ Sass의 `@extend`는 기존에 정의된 class의 css 속성을 그대로 가져
 `assert_template` integration test에서 layout을 제대로 rendering하는지 확인
 
 `redirect_to @user` == `redirect_to user_url(@user)`
+
+
+
+### Chapter 8.
+Rails는 `cookies`를 이용해서 sessions을 구현한다.
+
+`form_for(@user)` 이건 `/users` URL에 `POST` action이라고 Rails가 이해한다.
+
+`integration test`
+
+1. invalid information --> assert_not
+
+2. valid information --> assert
+
+`ApplicationController`에 `include SessionsHelper`를 넣으면, 모든 view에서 helper module에 정의된 method를 사용할 수 있다.
+
+`redirect_to user`에서 Rails는 자동으로 `user_url(user)`으로 바꿔준다.
+
+`.find`는 찾는 대상이 없으면 exception을 날리고, `.find_by`는 `nil`을 반환한다.
+
+`<%= link_to "Log out", logout_path, method: "delete" %>`
+
+`helper` method는 test에서 사용할 수 없다.
+
+같은 기능의 helper method를 development와 test에서 사용해야 한다면, 이름을 다르게 해서 헷갈리지 않도록 하자.
+
+#####remember token
+`attr_accessor :remember_token` database에 저장되지 않는 attribute인 `remember_token`을 사용할 수 있게 해준다. `user.remember_token`
+
+
+### Chapter 9.
+
+`form_for(@user)`는 `@user.new_record?`가 `true`이면 POST를 `false`이면 PATCH를 사용한다. 그래서 new.html.erb 와 edit.html.erb에 동일하게 `form_for(@user)`를 사용할 수 있다.
+
+`validates`의 `allow_nil: true` option은 blank도 validation을 하지 않게 해준다. `nil`을 넘겼더니 error가 난다. 이상하다. 마치 `allow_nil: true`와 `allow_blank: true`가 같은 방식으로 동작하는 것 같다. `rails 4.2.2`
+
+test에 포함되지 않은 것 같은 code에 `raise`를 사용하면, test coverage에 포함되었는지 확인할 수 있다. exception이 발생하면 test가 되는 code이고, 아니라면 빠진 code이다.
+
+the conventional order for the arguments to assert_equal is expected, actual:
 
