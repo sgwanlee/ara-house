@@ -158,6 +158,9 @@ Rails는 `cookies`를 이용해서 sessions을 구현한다.
 #####remember token
 `attr_accessor :remember_token` database에 저장되지 않는 attribute인 `remember_token`을 사용할 수 있게 해준다. `user.remember_token`
 
+test에 포함되지 않은 것 같은 code에 `raise`를 사용하면, test coverage에 포함되었는지 확인할 수 있다. exception이 발생하면 test가 되는 code이고, 아니라면 빠진 code이다.
+
+the conventional order for the arguments to assert_equal is expected, actual:
 
 ### Chapter 9.
 
@@ -165,7 +168,5 @@ Rails는 `cookies`를 이용해서 sessions을 구현한다.
 
 `validates`의 `allow_nil: true` option은 blank도 validation을 하지 않게 해준다. `nil`을 넘겼더니 error가 난다. 이상하다. 마치 `allow_nil: true`와 `allow_blank: true`가 같은 방식으로 동작하는 것 같다. `rails 4.2.2`
 
-test에 포함되지 않은 것 같은 code에 `raise`를 사용하면, test coverage에 포함되었는지 확인할 수 있다. exception이 발생하면 test가 되는 code이고, 아니라면 빠진 code이다.
 
-the conventional order for the arguments to assert_equal is expected, actual:
 
