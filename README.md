@@ -169,4 +169,6 @@ the conventional order for the arguments to assert_equal is expected, actual:
 `validates`의 `allow_nil: true` option은 blank도 validation을 하지 않게 해준다. `nil`을 넘겼더니 error가 난다. 이상하다. 마치 `allow_nil: true`와 `allow_blank: true`가 같은 방식으로 동작하는 것 같다. `rails 4.2.2`
 
 
+Here we call render not on a string with the name of a partial, but rather on a `user` variable of class User;9 in this context, Rails automatically looks for a partial called `app/views/users/_user.html.erb`, which we must create
+
 
