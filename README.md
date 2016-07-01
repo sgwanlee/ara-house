@@ -193,3 +193,23 @@ arr1.zip(arr2).each do |e1, e2|
 ...
 end
 ```
+#### assing() in test
+test code에 있는 action에서 사용되는 모든 `instance variable`이 저장된다.
+
+```
+<test.rb>
+test `a test` do
+post users_path(), user: {email:a@a.a, ...}
+user = assigns(:user)
+# user.email == a@a.a
+end
+
+<users_controller.rb>
+def create
+...
+@user = User.new(users_params)
+end
+
+
+
+```
