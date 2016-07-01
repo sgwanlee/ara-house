@@ -172,3 +172,24 @@ the conventional order for the arguments to assert_equal is expected, actual:
 Here we call render not on a string with the name of a partial, but rather on a `user` variable of class User;9 in this context, Rails automatically looks for a partial called `app/views/users/_user.html.erb`, which we must create
 
 
+### Chapter 11.
+
+#### Meta-programming
+프로그램을 만드는 프로그램
+`send` method는 object에 `message`를 보낼 수 있게 해준다.
+
+```
+a.length
+a.send(:length)
+```
+
+
+####iterate two arrays at once
+
+```
+arr1 = [e1]
+arr2 = [e2]
+arr1.zip(arr2).each do |e1, e2|
+...
+end
+```
