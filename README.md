@@ -209,7 +209,8 @@ def create
 ...
 @user = User.new(users_params)
 end
-
-
-
 ```
+
+####Heroku
+`heroku config:get SENDGRID_USERNAME`
+
