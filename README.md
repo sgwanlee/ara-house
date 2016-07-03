@@ -86,8 +86,10 @@ Rails에서는 css파일은 ```application.css```으로 javascript 파일은 ```
 
 
 ###Chapter6.
-
+#### rails generate
 `generate` 명령어는 `column`:`type` 형태로 argument를 받는다.
+`--no-test-framework` option을 사용하면 test에 필요한 파일은 만들지 않는다.
+`generate controller` controller 이름은 복수형으로 끝나게 하는게, convention을 적용하기에 편하다. (singular도 가능하긴 하다.)
 
 `active_record`의 uniqueness validation이 `db` level에서의 uniqueness validation을 보장하지는 않는다.
 
@@ -214,3 +216,21 @@ end
 ####Heroku
 `heroku config:get SENDGRID_USERNAME`
 
+
+### Chapter 12.
+12.1.2 exercise 1 solution : model이 없기 때문에
+
+#### Assign 하는 방법.
+1. regular assign (`attribute=`)
+database에 적용되지 않음.
+`reload!`로 변경사항을 버리고 database의 값을 다시 가져올 수 있다.
+2. `update_attribute`
+validation없이 모델에 관여한다.
+3. `update`
+attribution을 바꾸고, validation 한 뒤 database에도 영향을 준다.
+수정할 attribute가 단 하나라도 `update_attribute` 쓰지말고 `update`를 사용하자.
+
+
+###Q. before filter에서 udpate_attribute 사용시 stack이 너무 길어 알기어려운 error가 integration test 진행시 발생.
+
+####

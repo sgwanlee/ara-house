@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-	attr_accessor :activation_token, :remember_token
+	attr_accessor :activation_token, :remember_token, :reset_token
 	before_save :downcase_email
   before_save :create_activation_digest
 	validates :name, presence: true, length: {maximum: 20}
@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
 
   # Forgets a user.
   def forget
-    update_attribute(:remember_digest, nil)
+    update(remember_digest: nil)
   end
 
   def downcase_email
@@ -51,7 +51,13 @@ class User < ActiveRecord::Base
   # Create activation digest
   def create_activation_digest
     self.activation_token = User.new_token
+    # update(activation_digest: User.digest(activation_token))
     self.activation_digest = User.digest(activation_token)
+  end
+
+  def create_reset_digest
+    update_attribute(:reset_token, User.new_token)
+    update_columns(reset_digest: User.digest(reset_token), reset_sent_at: Time.zone.now)
   end
 
   # Activates an account
@@ -62,5 +68,14 @@ class User < ActiveRecord::Base
   #Send activation email
   def send_activation_mail
     UserMailer.account_activation(self).deliver_now
+  end
+
+  def send_password_reset_mail
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  # Return true if password reset is expired
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 end
