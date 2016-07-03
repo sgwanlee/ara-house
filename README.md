@@ -22,6 +22,9 @@ console에서 route helper 이용하려면
 
 ```
 
+`helper` object를 통해서 `time_ago_in_words` helper를 console에서 사용할 수 있다.
+`helper.time_ago_in_words(3.week.ago)`
+
 
 #####Test text highlighting
 [gem minitest_reporter](http://chriskottom.com/blog/2014/06/dress-up-your-minitest-output/)
@@ -233,4 +236,24 @@ attribution을 바꾸고, validation 한 뒤 database에도 영향을 준다.
 
 ###Q. before filter에서 udpate_attribute 사용시 stack이 너무 길어 알기어려운 error가 integration test 진행시 발생.
 
-####
+### Chapter 13.
+`add_index :microposts, [:user_id, :created_at]` - 최신순으로 user_id에 관련된 micropost를 검색을 위한 index 추가.
+
+`has_many`, `belongs_to` association인 `User`class와 `Micropost`
+`Micropost` object를 생성할 때 `user.micropost.create`를 사용하면 자동적으로 `user_id`가 설정된다.
+
+```
+Micropost.create  --> User.micropost.create
+Micropost.create! --> User.micropost.create!
+Micropost.new     --> User.micropost.build
+```
+
+##### link_to
+```
+link_to "delete", micropost, method: :delete, data: {confirm: "You sure?"}
+```
+`url`자리에 resource object (micropost)를 넣으면 resource_path(resource_object) helper로 자동으로 연결
+
+```
+link_to "show", micropost_path(micropost) == link_to "show", micropost
+```
