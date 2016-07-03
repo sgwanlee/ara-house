@@ -6,17 +6,31 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     @user = users(:michael)
   end
 
-  test 'micropost sidebar count' do
+  test 'micropost interface' do
     log_in_as(@user)
     get root_path
-    assert_match "34 microposts", reponse.body
-    # User with zero microposts
-    other_user = users(:archer)
-    log_in_as(other_user)
-    get root_path
-    assert_match "0 microposts", response.body
-    other_user.microposts.create!(content: "A micropost")
-    get root_path
-    assert_match "1 microposts", response.body
+    assert_select 'div.pagination'
+    # Invalid submission
+    assert_no_difference "Micropost.count" do
+      post microposts_path, micropost: {content: ""}
+    end
+    assert_select 'div#error_explanation'
+    # Valid submission
+    content = "!23"
+    assert_difference "Micropost.count", 1 do
+      post microposts_path, micropost: {content: content}
+    end
+    assert_redirected_to root_url
+    follow_redirect!
+    assert_match content, response.body
+    # Delete post
+    assert_select "a", text: "delete"
+    first_micropost = @user.microposts.paginate(page: 1).first
+    assert_difference "Micropost.count", -1 do
+      delete micropost_path(first_micropost)
+    end
+    # Visit different user (no delete links)
+    log_in_as(users(:archer))
+    assert_select 'a', text:"delete", count: 0
   end
 end
