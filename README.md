@@ -281,3 +281,4 @@ git@heroku.com:<your_heroku_project_name>.git
 heroku git:remote -a <your_heroku_project_name>
 ```
 
+`heroku pg:reset DATABASE` heroku db reset
