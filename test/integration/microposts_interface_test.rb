@@ -10,6 +10,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     log_in_as(@user)
     get root_path
     assert_select 'div.pagination'
+    assert_select 'input[type=file]'
     # Invalid submission
     assert_no_difference "Micropost.count" do
       post microposts_path, micropost: {content: ""}
@@ -17,9 +18,11 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_select 'div#error_explanation'
     # Valid submission
     content = "!23"
+    picture = fixture_file_upload('test/fixtures/rails.png', 'image/png')
     assert_difference "Micropost.count", 1 do
-      post microposts_path, micropost: {content: content}
+      post microposts_path, micropost: {content: content, picture: picture}
     end
+    assert assigns(:micropost).picture?
     assert_redirected_to root_url
     follow_redirect!
     assert_match content, response.body
@@ -32,5 +35,6 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     # Visit different user (no delete links)
     log_in_as(users(:archer))
     assert_select 'a', text:"delete", count: 0
+    
   end
 end

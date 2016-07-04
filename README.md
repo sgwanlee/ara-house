@@ -257,3 +257,27 @@ link_to "delete", micropost, method: :delete, data: {confirm: "You sure?"}
 ```
 link_to "show", micropost_path(micropost) == link_to "show", micropost
 ```
+
+####CarrierWave
+`rails generate uploader Picture`
+file upload를 위해 `form_for`에 `html: { multipart: true }` option 추가
+
+####validate
+Rails에서 제공하지 않는 validation을 위해 custom validation method를 만들경우 `validate <method_name>`으로 사용. (`validates`가 아닌것에 유의)
+
+
+####ImageMagick
+
+#####Heroku
+
+[setup](https://devcenter.heroku.com/articles/getting-started-with-ruby#set-up)
+
+이미 있는 app에 git project를 연결하기
+
+```
+git remote add heroku 
+git@heroku.com:<your_heroku_project_name>.git
+
+heroku git:remote -a <your_heroku_project_name>
+```
+
