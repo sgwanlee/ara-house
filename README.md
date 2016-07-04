@@ -1,3 +1,13 @@
+####Ruby
+
+```
+>> %w[A B C].map { |char| char.downcase }
+=> ["a", "b", "c"]
+>> %w[A B C].map(&:downcase)
+=> ["a", "b", "c"]
+```
+
+
 ####REST
 Rails에서는 REST architecture는 data를 만들수있고(created), 보여지고(shown), 수정되고(updated), 삭제되는(destroyed) `resource`로 나타내는 것 이다. 
 
@@ -282,3 +292,6 @@ heroku git:remote -a <your_heroku_project_name>
 ```
 
 `heroku pg:reset DATABASE` heroku db reset
+
+####has_many through:
+기본값으로 assocation의 단수형의 foreign key를 찾는다.
