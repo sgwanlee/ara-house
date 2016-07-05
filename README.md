@@ -295,3 +295,19 @@ heroku git:remote -a <your_heroku_project_name>
 
 ####has_many through:
 기본값으로 assocation의 단수형의 foreign key를 찾는다.
+Active Record에서 <association>_ids 라는 method를 자동으로 만들어준다.
+
+##### Ajax test
+`xhr: true` option
+
+```
+post relationships_path, xhr: true, followed_id: @other.id
+```
+##### default_scope
+[default_scope is evil](http://rails-bestpractices.com/posts/2013/06/15/default_scope-is-evil/)
+
+* default_scope으로 설정해두면, database에서 해당 모델의 데이터를 가져올 때 자동으로 적용된다.
+* overide 되지 않는다.
+
+
+
