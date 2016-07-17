@@ -3,6 +3,13 @@
 class PictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   process resize_to_limit: [400, 400]
+  process :auto_orient
+
+  def auto_orient
+    manipulate! do |image|
+      image.tap(&:auto_orient)
+    end
+  end
 
   # Choose what kind of storage to use for this uploader:
   if Rails.env.production?
