@@ -1,4 +1,6 @@
 class StaticPagesController < ApplicationController
+  before_filter :prepare_for_mobile, only: :home
+  
   def home
     if logged_in?
       @micropost = current_user.microposts.build if logged_in?
