@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_filter :prepare_for_mobile, only: :new
+  before_filter :check_for_mobile, only: :new
   def new
 
   end
