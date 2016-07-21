@@ -9,8 +9,11 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   test "login with invalid information" do
     get login_path
     assert_template 'sessions/new'
-    post login_path, session: { email: "", password: "" }
+    post login_path, session: { email: "123", password: "", remember_me: "1" }
     assert_template 'sessions/new'
+    # repopulating
+    assert_select 'form input[type=email][value="123"]'
+    assert_select 'form input[type=checkbox][value="1"]'
     assert_not flash.empty?
     get root_path
     assert flash.empty?
