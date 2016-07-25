@@ -77,4 +77,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to login_url
   end
 
+  test 'should get photos when logged in' do
+    log_in_as @user
+    get :photos, id: @user
+    assert_response :success
+  end
+
+  test 'should redirect photos when not logged in' do
+    get :photos, id: @user
+    assert_redirected_to login_url
+  end
+
 end
