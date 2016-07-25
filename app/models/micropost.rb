@@ -5,6 +5,11 @@ class Micropost < ActiveRecord::Base
   validates :user_id, presence: true
   validates :content, presence: true, length: {maximum: 140}
   validate :picture_size
+  mount_uploader :video, VideoUploader
+
+  def set_success(format, opts)
+    self.success = true
+  end
 
   private
   	def picture_size
