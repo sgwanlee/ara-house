@@ -1,9 +1,10 @@
 # encoding: utf-8
 
-class PictureUploader < CarrierWave::Uploader::Base
+class MediaUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
-  process resize_to_limit: [400, 400]
-  process :auto_orient
+  include CarrierWave::Video
+
+  # process_extensions PictureUploader::VIDEO_EXTENSIONS, encode_video: [:mp4, callbacks: { after_transcode: :set_success } ]
 
   def auto_orient
     manipulate! do |image|
@@ -46,14 +47,44 @@ class PictureUploader < CarrierWave::Uploader::Base
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
+  IMAGE_EXTENSIONS = %w(jpg jpeg gif png)
+  VIDEO_EXTENSIONS = %w(mp4)
   def extension_white_list
-    %w(jpg jpeg gif png)
+    IMAGE_EXTENSIONS + VIDEO_EXTENSIONS
   end
+
+
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   # def filename
   #   "something.jpg" if original_filename
   # end
+
+  # create a new "process_extensions" method.  It is like "process", except
+  # it takes an array of extensions as the first parameter, and registers
+  # a trampoline method which checks the extension before invocation
+  def self.process_extensions(*args)
+    extensions = args.shift
+    args.each do |arg|
+      if arg.is_a?(Hash)
+        arg.each do |method, args|
+          processors.push([:process_trampoline, [extensions, method, args]])
+        end
+      else
+        processors.push([:process_trampoline, [extensions, arg, []]])
+      end
+    end
+  end
+
+  # our trampoline method which only performs processing if the extension matches
+  def process_trampoline(extensions, method, args)
+    extension = File.extname(original_filename).downcase
+    extension = extension[1..-1] if extension[0,1] == '.'
+    self.send(method, *args) if extensions.include?(extension)
+  end
+
+  process_extensions IMAGE_EXTENSIONS, :resize_to_limit => [400, 400]
+  process_extensions IMAGE_EXTENSIONS, :auto_orient
 
 end

@@ -1,3 +1,4 @@
 <% @microposts.each do |micropost| %>
-	<%= image_tag micropost.picture.url, class: :micropost_img unless micropost.picture.file.nil? %>
+	<%= image_tag micropost.media.url, class: :micropost_img if micropost.has_image? %>
+  <%= video_tag micropost.media.url, class: :micropost_img, controls: true if micropost.has_video? %>
 <% end %>

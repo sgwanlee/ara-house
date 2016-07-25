@@ -11,10 +11,14 @@ class UsersPhotosTest < ActionDispatch::IntegrationTest
 
   test "photos page" do
   	get photos_user_path(@user)
-  	microposts = @user.microposts.where("picture is NOT NULL and picture != ''")
+  	microposts = @user.microposts.where("media is NOT NULL and media != ''")
   	assert_not microposts.empty?
   	microposts.each do |micropost|
-  		assert_select "img[src=?]", micropost.picture.url
+      if micropost.has_image?
+  		  assert_select "img[src=?]", micropost.media.url
+      else
+        assert_select "video[src=?]", micropost.media.url
+      end
   	end
   end
 end

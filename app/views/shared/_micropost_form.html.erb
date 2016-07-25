@@ -4,19 +4,16 @@
     <%= f.text_area :content, placeholder: "Compose new micropost... " %>
   </div>
   <%= f.submit "Post", class: "btn btn-lg btn-primary btn-block" %>
-  <span class="picture">
-    <%= f.file_field :picture, accept: 'image/jpeg,image/gif,image/png' %>
-  </span>
-  <span class="video">
-    <%= f.file_field :video, accept: 'video/mp4' %>
+  <span class="media">
+    <%= f.file_field :media, accept: 'image/jpg, image/jpeg, image/gif, image/png, video/mp4' %>
   </span>
 <% end %>
 
 
 <script type="text/javascript">
-	$('#micropost_picture').bind('change', function(){
+	$('#micropost_media').bind('change', function(){
 		var size_in_megabytes = this.file[0].size/1024/1024;
-		if (size_in_megabytes > 5) {
+		if (size_in_megabytes > 20) {
 			alert("Maximum file size is 5MB. Please choose a smaller file")
 		}
 	});

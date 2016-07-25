@@ -66,7 +66,7 @@ class UsersController < ApplicationController
 
   def photos
     @user = User.find(params[:id])
-    @microposts = @user.microposts.where("picture is NOT NULL and picture != ''")
+    @microposts = @user.microposts.where("media is NOT NULL and media != ''")
     render 'show_photos'
   end
 

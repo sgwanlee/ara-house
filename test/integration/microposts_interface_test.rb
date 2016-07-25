@@ -18,14 +18,19 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_select 'div#error_explanation'
     # Valid submission
     content = "!23"
-    picture = fixture_file_upload('test/fixtures/rails.png', 'image/png')
+    image = fixture_file_upload('test/fixtures/rails.png', 'image/png')
     assert_difference "Micropost.count", 1 do
-      post microposts_path, micropost: {content: content, picture: picture}
+      post microposts_path, micropost: {content: content, media: image}
     end
-    assert assigns(:micropost).picture?
+    @micropost = assigns(:micropost)
+    assert @micropost.media?
     assert_redirected_to root_url
     follow_redirect!
     assert_match content, response.body
+    # No video_tag
+    assert_select "video[src=?]", false, @micropost.media.url
+    # image_tag
+    assert_select "img[src=?]", @micropost.media.url
     # Delete post
     assert_select "a", text: "delete"
     first_micropost = @user.microposts.paginate(page: 1).first
@@ -35,6 +40,6 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     # Visit different user (no delete links)
     log_in_as(users(:archer))
     assert_select 'a', text:"delete", count: 0
-    
+
   end
 end
