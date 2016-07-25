@@ -18,6 +18,11 @@ Rails에서는 REST architecture는 data를 만들수있고(created), 보여지�
 
 `git branch -dr origin/login-logout` remote branch를 없앨 때는 `-dr` 옵션을 사용하자.
 
+`git clean -f -n` 어떤 untracked 파일이 지워질지 확인
+`git clean -f` untracked 파일을 지워버림
+
+`git commit --amend` 이전 commit에 지금 변경사항을 합침. (새로운 commit이 생기지 않음)
+
 #####--without production
 `bundle install --without production`
 
