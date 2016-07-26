@@ -6,18 +6,14 @@ class Micropost < ActiveRecord::Base
   validates :content, presence: true, length: {maximum: 140}
   validate :media_size
 
-  def set_success(format, opts)
-    self.success = true
-  end
-
   def has_image?
     return false if media.url.nil?
-    MediaUploader::IMAGE_EXTENSIONS.any? { |img_format| media.url.include?(img_format)}
+    MediaUploader::IMAGE_EXTENSIONS.any? { |img_format| media.url.downcase.include?(img_format)}
   end
 
   def has_video?
     return false if media.url.nil?
-    MediaUploader::VIDEO_EXTENSIONS.any? { |video_format| media.url.include?(video_format)}
+    MediaUploader::VIDEO_EXTENSIONS.any? { |video_format| media.url.downcase.include?(video_format)}
   end
 
   private

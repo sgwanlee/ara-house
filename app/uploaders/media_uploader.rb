@@ -4,8 +4,6 @@ class MediaUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::Video
 
-  # process_extensions PictureUploader::VIDEO_EXTENSIONS, encode_video: [:mp4, callbacks: { after_transcode: :set_success } ]
-
   def auto_orient
     manipulate! do |image|
       image.tap(&:auto_orient)
@@ -48,7 +46,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   IMAGE_EXTENSIONS = %w(jpg jpeg gif png)
-  VIDEO_EXTENSIONS = %w(mp4)
+  VIDEO_EXTENSIONS = %w(mp4 mov)
   def extension_white_list
     IMAGE_EXTENSIONS + VIDEO_EXTENSIONS
   end
@@ -84,7 +82,21 @@ class MediaUploader < CarrierWave::Uploader::Base
     self.send(method, *args) if extensions.include?(extension)
   end
 
+  def filename
+    if original_filename
+      if IMAGE_EXTENSIONS.any? {|img_f| original_filename.downcase.include?(img_f)}
+        result = original_filename
+      else
+        result = [original_filename.gsub(/.\w+$/, ""), 'mp4'].join('.')
+      end
+    else
+      result = nil
+    end
+    result
+  end
+
   process_extensions IMAGE_EXTENSIONS, :resize_to_limit => [400, 400]
   process_extensions IMAGE_EXTENSIONS, :auto_orient
+  process_extensions VIDEO_EXTENSIONS, encode_video: [:mp4, resolution: "400x400", preserve_aspect_ratio: :height ]
 
 end

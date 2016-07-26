@@ -16,14 +16,15 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
       post microposts_path, micropost: {content: ""}
     end
     assert_select 'div#error_explanation'
-    # Valid submission
+    # Valid Image submission
     content = "!23"
     image = fixture_file_upload('test/fixtures/rails.png', 'image/png')
     assert_difference "Micropost.count", 1 do
       post microposts_path, micropost: {content: content, media: image}
     end
-    @micropost = assigns(:micropost)
-    assert @micropost.media?
+    # media has temparary url when @micropost = assigns(:micropost)
+    @micropost = @user.microposts.find(assigns(:micropost).id)
+    assert_not @micropost.media.nil?
     assert_redirected_to root_url
     follow_redirect!
     assert_match content, response.body
@@ -40,6 +41,18 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     # Visit different user (no delete links)
     log_in_as(users(:archer))
     assert_select 'a', text:"delete", count: 0
+
+    #Valid Video submission
+    log_in_as(@user)
+    get root_path
+    video = fixture_file_upload('test/fixtures/test.mov', 'video/mov')
+    post microposts_path, micropost: {content: content, media: video}
+    @micropost = @user.microposts.find(assigns(:micropost).id)
+    follow_redirect!
+    # video_tag
+    assert_select "video[src=?]", @micropost.media.url
+    # No image_tag
+    assert_select "img[src=?]", false, @micropost.media.url
 
   end
 end
