@@ -4,7 +4,7 @@
   <span class="content">
   	<%= micropost.content %>
   	<%= image_tag micropost.media.url, class: :micropost__img if micropost.has_image? %>
-    <%= video_tag micropost.media.url, class: :micropost__video, controls: true if micropost.has_video? %>
+    <%= video_tag micropost.media.url, class: :micropost__video, controls: true, preload: :none if micropost.has_video? %>
   </span>
   <span class="timestamp">
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
