@@ -51,6 +51,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     follow_redirect!
     # video_tag
     assert_select "video[src=?]", @micropost.media.url
+    assert_select "video[poster=?", @micropost.media.thumb.url
     # No image_tag
     assert_select "img[src=?]", false, @micropost.media.url
 

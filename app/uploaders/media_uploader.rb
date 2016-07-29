@@ -3,6 +3,7 @@
 class MediaUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::Video
+  include CarrierWave::Video::Thumbnailer
 
   def auto_orient
     manipulate! do |image|
@@ -95,8 +96,22 @@ class MediaUploader < CarrierWave::Uploader::Base
     result
   end
 
+  def png_name for_file, version_name
+    %Q{#{version_name}_#{for_file.chomp(File.extname(for_file))}.png}
+  end
+
   process_extensions IMAGE_EXTENSIONS, :resize_to_limit => [400, 400]
   process_extensions IMAGE_EXTENSIONS, :auto_orient
   process_extensions VIDEO_EXTENSIONS, encode_video: [:mp4, audio_codec: "aac"]
+
+  version :thumb do
+    process_extensions VIDEO_EXTENSIONS, thumbnail: [{format: 'png', quality: 5, size: 400, strip: false, logger: Rails.logger}]
+    def full_filename for_file
+      png_name for_file, version_name
+    end
+  end
+
+
+
 
 end

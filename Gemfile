@@ -17,6 +17,7 @@ gem 'turbolinks',   '2.3.0'
 gem 'jbuilder',     '2.2.3'
 gem 'sdoc',         '0.4.0', group: :doc
 gem 'carrierwave-video',  '0.5.6'
+gem 'carrierwave-video-thumbnailer', '0.1.4'
 gem 'puma',           '3.1.0'
 
 group :development, :test do
