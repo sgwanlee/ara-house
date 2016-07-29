@@ -1,8 +1,8 @@
 <div class="row photos">
 	<% @microposts.each do |micropost| %>
-		<div class="col-md-4">
+		<div class="col-sm-12 col-md-4">
 		<%= image_tag micropost.media.url, class: :photo__image if micropost.has_image? %>
-	  <%= video_tag micropost.media.url, class: :photo__video, controls: true if micropost.has_video? %>
+	  <%= video_tag micropost.media.url, class: :photo__video, controls: true, poster: micropost.media.thumb.url if micropost.has_video? %>
 	  </div>
 	<% end %>
 </div>
