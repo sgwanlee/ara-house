@@ -97,6 +97,6 @@ class MediaUploader < CarrierWave::Uploader::Base
 
   process_extensions IMAGE_EXTENSIONS, :resize_to_limit => [400, 400]
   process_extensions IMAGE_EXTENSIONS, :auto_orient
-  process_extensions VIDEO_EXTENSIONS, encode_video: [:mp4, audio_codec: "libfdk_aac", resolution: "640x360"]
+  process_extensions VIDEO_EXTENSIONS, encode_video: [:mp4, audio_codec: "libfdk_aac"]
 
 end
