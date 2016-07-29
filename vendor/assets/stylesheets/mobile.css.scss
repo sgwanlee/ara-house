@@ -7,6 +7,8 @@ input[type=email], input[type=password] {
   min-height: 350px;
 }
 
-.micropost__img {
-  max-width: 100%;
+.microposts {
+	img {
+  	max-width: 100%;
+  }
 }
