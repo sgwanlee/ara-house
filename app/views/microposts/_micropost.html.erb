@@ -1,16 +1,14 @@
-<li id="micropost-<%= micropost.id %>">
-  <%= link_to image_tag(micropost.user.profile_img.url, class: "gravatar"), micropost.user %>
-  <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
-  <span class="content">
-  	<%= micropost.content %>
-  	<%= image_tag micropost.media.url if micropost.has_image? %>
-    <%= video_tag micropost.media.url, controls: true, preload: :none, poster: micropost.media.thumb.url if micropost.has_video? %>
-  </span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-    <% if current_user?(micropost.user) %>
-    	<%= link_to "delete", micropost, method: :delete, data: {confirm: "You sure?"} %>
-  	<% end %>
-  </span>
-
-</li>
+<%= react_component('Micropost', {
+      id: micropost.id,
+      content: micropost.content,
+      delete_path: micropost_path(micropost),
+      media: micropost.media.url,
+      media_thumb_url: micropost.media.thumb.url,
+      timestamp: time_ago_in_words(micropost.created_at),
+      user_name: micropost.user.name,
+      user_path: user_path(micropost.user),
+      user_profile_url: asset_path(micropost.user.profile_img.url),
+      has_image: micropost.has_image?, 
+      has_video: micropost.has_video?,
+      current_user: current_user?(micropost.user)
+    },  {prerender: true}) %>

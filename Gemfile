@@ -19,6 +19,7 @@ gem 'sdoc',         '0.4.0', group: :doc
 gem 'carrierwave-video',  '0.5.6'
 gem 'carrierwave-video-thumbnailer', '0.1.4'
 gem 'puma',           '3.1.0'
+gem 'react-rails',		'~> 1.5'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'
